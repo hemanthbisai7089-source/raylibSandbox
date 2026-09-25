@@ -2,18 +2,18 @@ const r = require("raylib");
 
 let x = 5;
 let y = 5;
-const snakeWidth = 5;
-const snakeHeight = 5;
+const snakeWidth = 1;
+const snakeHeight = 1;
 
 let foodX = 6;
 let foodY = 8;
-const foodWidth = 5;
-const foodHeight = 5;
+const foodWidth = 1;
+const foodHeight = 1;
 
 let score = 0;
 
 let direction;
-const movementSpeed = 5;
+const movementSpeed = 1;
 
 const WIDTH = 1280;
 const HEIGHT = 720;
@@ -22,6 +22,7 @@ const VIRTUALWIDTH = 160 / 2;
 const VIRTUALHEIGHT = 90 / 2;
 
 let target;
+let gameOver = false;
 
 function setup() {
 
@@ -92,11 +93,7 @@ function update() {
 
     }
 
-    if (x === VIRTUALWIDTH) x = -snakeWidth;
-    else if (y === VIRTUALHEIGHT) y = -snakeHeight;
-    else if (x + snakeWidth === 0) x = VIRTUALWIDTH;
-    else if (y + snakeHeight === 0) y = VIRTUALHEIGHT;
-    // draw(x, y, rectangleWidth, rectangleHeight, foodX, foodY, foodWidth, foodHeight);
+    if (x === VIRTUALWIDTH + 1 || y === VIRTUALHEIGHT + 1 || x + snakeWidth === -1 || y + snakeHeight === -1) gameOver = true;
 }
 
 
@@ -104,14 +101,18 @@ function draw() {
     r.BeginTextureMode(target);
     r.ClearBackground(r.BLACK);
 
-    r.DrawText(`score : ${score}`, 2, 2, 0, r.GREEN);
-    r.DrawRectangle(foodX, foodY, foodWidth, foodHeight, r.BLUE);
-    r.DrawRectangle(x, y, snakeWidth, snakeHeight, r.RED);
-    // Draw a single "pixel" (will appear large when scaled)
-    // r.DrawPixel(10, 10, r.WHITE);
-    // r.DrawText("Snake", 1, 1, 1 / 1000, r.GREEN);
-    r.EndTextureMode();
+    if (gameOver) {
 
+        r.DrawText("GAME OVER", VIRTUALWIDTH / 8, VIRTUALHEIGHT / 3, 1, r.RED);
+        r.DrawText(`score : ${score}`, VIRTUALWIDTH / 8, VIRTUALHEIGHT / 1.9, 1, r.GREEN);
+    }
+    else {
+        r.DrawText(`score : ${score}`, 2, 2, 1, r.GREEN);
+        r.DrawRectangle(foodX, foodY, foodWidth, foodHeight, r.BLUE);
+        r.DrawRectangle(x, y, snakeWidth, snakeHeight, r.RED);
+    }
+
+    r.EndTextureMode();
 
     r.BeginDrawing();
 
