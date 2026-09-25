@@ -2,7 +2,7 @@ const r = require("raylib");
 
 let direction;
 const WIDTH = 1280;
-const HEIGHT = 960;
+const HEIGHT = 720;
 const VIRTUALWIDTH = 160 / 2;
 
 const VIRTUALHEIGHT = 90 / 2;
