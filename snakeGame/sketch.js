@@ -1,12 +1,22 @@
 const r = require("raylib");
 
-let x = 5;
-let y = 5;
+const WIDTH = 1280;
+const HEIGHT = 720;
+
+const VIRTUALWIDTH = 80;
+const VIRTUALHEIGHT = 45;
+
+let snakeInitialPositonX = 30;
+let snakeInitialPositonY = 22;
+let x = snakeInitialPositonX;
+let y = snakeInitialPositonY;
 const snakeWidth = 1;
 const snakeHeight = 1;
 
-let foodX = 6;
-let foodY = 8;
+let foodInitialPositonX = 35;
+let foodInitialPositonY = 22;
+let foodX = foodInitialPositonX;
+let foodY = foodInitialPositonY;
 const foodWidth = 1;
 const foodHeight = 1;
 
@@ -15,14 +25,10 @@ let score = 0;
 let direction;
 const movementSpeed = 1;
 
-const WIDTH = 1280;
-const HEIGHT = 720;
-
-const VIRTUALWIDTH = 160 / 2;
-const VIRTUALHEIGHT = 90 / 2;
 
 let target;
 let gameOver = false;
+let restart = false;
 
 function setup() {
 
@@ -38,6 +44,13 @@ function running() {
 
 
 function update() {
+
+    if (restart) {
+        restart = false;
+        gameOver = false;
+        direction = "";
+    }
+
     directionToMove();
 
     if (direction === "right") {
@@ -94,6 +107,16 @@ function update() {
     }
 
     if (x === VIRTUALWIDTH + 1 || y === VIRTUALHEIGHT + 1 || x + snakeWidth === -1 || y + snakeHeight === -1) gameOver = true;
+    if (gameOver && r.IsKeyDown(r.KEY_SPACE)) {
+        x = snakeInitialPositonX;
+        y = snakeInitialPositonY;
+        foodX = foodInitialPositonX;
+        foodY = foodInitialPositonY;
+        score = 0;
+        restart = true;
+
+    }
+
 }
 
 
@@ -101,10 +124,11 @@ function draw() {
     r.BeginTextureMode(target);
     r.ClearBackground(r.BLACK);
 
-    if (gameOver) {
+    if (gameOver && !restart) {
 
         r.DrawText("GAME OVER", VIRTUALWIDTH / 8, VIRTUALHEIGHT / 3, 1, r.RED);
         r.DrawText(`score : ${score}`, VIRTUALWIDTH / 8, VIRTUALHEIGHT / 1.9, 1, r.GREEN);
+
     }
     else {
         r.DrawText(`score : ${score}`, 2, 2, 1, r.GREEN);
