@@ -134,28 +134,7 @@ function update() {
 
 }
 
-// function draw(x, y, rectangleWidth, rectangleHeight, foodX, foodY, foodWidth, foodHeight) {
 
-
-
-//   r.BeginDrawing();
-
-//   r.ClearBackground(r.WHITE);
-
-//   const source = { x: 0, y: 0, width: VIRTUALWIDTH, height: -VIRTUALHEIGHT };
-//   // Define destination rectangle (Stretches the 320x180 canvas to 1280x720)
-//   const dest = { x: 0, y: 0, width: WIDTH, height: HEIGHT };
-//   const origin = { x: 0, y: 0 };
-
-//   r.DrawTexturePro(target.texture, source, dest, origin, 0.0, r.WHITE);
-
-
-//   // r.DrawRectangle(foodX, foodY, foodWidth, foodHeight, r.BLUE);
-//   // r.DrawRectangle(x, y, rectangleWidth, rectangleHeight, r.RED);
-
-
-//   r.EndDrawing();
-// }
 
 function directionToMove(x, y) {
 
