@@ -2,17 +2,18 @@ const r = require("raylib");
 
 let x = 5;
 let y = 5;
-const snakeWidth = 1;
-const snakeHeight = 1;
+const snakeWidth = 5;
+const snakeHeight = 5;
 
 let foodX = 6;
 let foodY = 8;
-const foodWidth = 1;
-const foodHeight = 1;
+const foodWidth = 5;
+const foodHeight = 5;
 
 let score = 0;
 
 let direction;
+const movementSpeed = 5;
 
 const WIDTH = 1280;
 const HEIGHT = 720;
@@ -48,7 +49,7 @@ function update() {
             score += 1;
 
         }
-        x = x + 1;
+        x = x + movementSpeed;
 
     }
     else if (direction === "left") {
@@ -61,7 +62,7 @@ function update() {
             score += 1;
 
         }
-        x = x - 1;
+        x = x - movementSpeed;
 
     }
     else if (direction === "up") {
@@ -74,7 +75,7 @@ function update() {
             score += 1;
 
         }
-        y = y - 1;
+        y = y - movementSpeed;
 
     }
     else if (direction === "down") {
@@ -87,7 +88,7 @@ function update() {
             score += 1;
 
         }
-        y = y + 1;
+        y = y + movementSpeed;
 
     }
 
