@@ -16,6 +16,7 @@ function setup() {
 let scannerX = 0;
 let scannerY = 0;
 const scannerWidth = 20;
+let color = r.WHITE;
 let scannerReached = false;
 
 function scannerPosition() {
@@ -29,6 +30,7 @@ function scannerPosition() {
 function update() {
 
     scannerPosition();
+    overlapCheck();
 
     if (scannerReached) {
 
@@ -39,14 +41,27 @@ function update() {
 
 
 }
+const particleX = 100;
+const particleY = 0;
+const ParticleWidth = 50;
+const particleEnd = particleX + ParticleWidth;
 
+function overlapCheck() {
+    if (scannerX + scannerWidth >= particleX && scannerX <= particleEnd) color = r.RED;
+    else {
+        color = r.WHITE;
+
+    }
+}
 
 function draw() {
+
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
 
 
-    r.DrawRectangle(scannerX, scannerY, scannerWidth, HEIGHT, r.WHITE);
+    r.DrawRectangle(particleX, particleY, ParticleWidth, HEIGHT, r.BLUE);
+    r.DrawRectangle(scannerX, scannerY, scannerWidth, HEIGHT, color);
 
     r.EndDrawing();
 }
