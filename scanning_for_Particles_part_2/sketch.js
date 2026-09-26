@@ -12,6 +12,7 @@ function setup() {
     r.InitWindow(WIDTH, HEIGHT, "scanning for particles");
     r.SetTargetFPS(60);
 }
+
 const detectorOneStart = 0;
 let detectorOneX = detectorOneStart;
 let detectorOneY = 0;
@@ -59,11 +60,11 @@ const verticalParticleEnd = verticalParticleY + verticalParticleHeight;
 
 
 
-function scannerPosition(axis, range, detectorEnd, detectorNumber) {
+function scannerPosition(axis, range, detectorStart, detectorEnd, detectorNumber) {
     if (detectorNumber === 1) {
         if (axis + range >= detectorEnd) {
             oneReached = true;
-        } else if (axis <= 0) {
+        } else if (axis <= detectorStart) {
             oneReached = false;
 
         } return oneReached;
@@ -72,7 +73,7 @@ function scannerPosition(axis, range, detectorEnd, detectorNumber) {
     if (detectorNumber === 2) {
         if (axis + range >= detectorEnd) {
             twoReached = true;
-        } else if (axis <= detectorTwoStart) {
+        } else if (axis <= detectorStart) {
             twoReached = false;
 
         } return twoReached;
@@ -81,7 +82,7 @@ function scannerPosition(axis, range, detectorEnd, detectorNumber) {
     if (detectorNumber === 3) {
         if (axis + range >= detectorEnd) {
             verticalReached = true;
-        } else if (axis <= 0) {
+        } else if (axis <= detectorStart) {
             verticalReached = false;
 
         } return verticalReached;
@@ -90,9 +91,9 @@ function scannerPosition(axis, range, detectorEnd, detectorNumber) {
 
 function update() {
 
-    detectorOneReached = scannerPosition(detectorOneX, detectorOneWidth, detectorOneEnd, 1);
-    detectorTwoReached = scannerPosition(detectorTwoX, detectorTwoWidth, detectorTwoEnd, 2);
-    verticalDetectorReached = scannerPosition(verticalDetectorY, verticalDetectorheight, verticalDetectorEnd, 3);
+    detectorOneReached = scannerPosition(detectorOneX, detectorOneWidth, detectorOneStart, detectorOneEnd, 1);
+    detectorTwoReached = scannerPosition(detectorTwoX, detectorTwoWidth, detectorTwoStart, detectorTwoEnd, 2);
+    verticalDetectorReached = scannerPosition(verticalDetectorY, verticalDetectorheight, verticalDetectorStart, verticalDetectorEnd, 3);
 
     detectorOneColor = horizontalOverlapCheck(particle1X, particle1End, particle2X, particle2End, detectorOneX, detectorOneWidth);
     detectorTwoColor = horizontalOverlapCheck(particle1X, particle1End, particle2X, particle2End, detectorTwoX, detectorTwoWidth);
