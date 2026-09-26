@@ -50,7 +50,6 @@ function update() {
         gameOver = false;
         direction = "";
     }
-
     directionToMove();
 
     if (direction === "right") {

@@ -1,0 +1,54 @@
+const r = require("raylib");
+//const geometry = require("./geometrya");
+
+function running() {
+    return !r.WindowShouldClose();
+}
+
+const WIDTH = 300;
+const HEIGHT = 200;
+
+function setup() {
+    r.InitWindow(WIDTH, HEIGHT, "scanning for particles");
+    r.SetTargetFPS(60);
+}
+let scannerX = 0;
+let scannerY = 0;
+const scannerWidth = 20;
+let scannerReached = false;
+
+function update() {
+    if (scannerX + scannerWidth === WIDTH) {
+        scannerReached = true;
+    } else if (scannerX === 0) {
+        scannerReached = false;
+    }
+    if (scannerReached) {
+
+        scannerX -= 1;
+    } else {
+        scannerX += 1;
+    }
+
+}
+
+function draw() {
+    r.BeginDrawing();
+    r.ClearBackground(r.BLACK);
+
+    r.DrawRectangle(scannerX, scannerY, scannerWidth, HEIGHT, r.WHITE);
+
+    r.EndDrawing();
+}
+
+function teardown() {
+    r.CloseWindow();
+}
+
+module.exports = {
+    running,
+    setup,
+    update,
+    draw,
+    teardown,
+};
