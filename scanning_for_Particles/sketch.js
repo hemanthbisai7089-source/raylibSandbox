@@ -27,10 +27,21 @@ function scannerPosition() {
     }
 }
 
+const particle1X = 100;
+const particle1Y = 0;
+const Particle1Width = 50;
+const particle1End = particle1X + Particle1Width;
+const particle2X = 200;
+const particle2Y = 0;
+const Particle2Width = 5;
+const particle2End = particle2X + Particle2Width;
+
+
 function update() {
 
     scannerPosition();
-    overlapCheck();
+    color = overlapCheck(particle1X, particle1End, particle2X, particle2End);
+
 
     if (scannerReached) {
 
@@ -41,15 +52,14 @@ function update() {
 
 
 }
-const particleX = 100;
-const particleY = 0;
-const ParticleWidth = 50;
-const particleEnd = particleX + ParticleWidth;
 
-function overlapCheck() {
-    if (scannerX + scannerWidth >= particleX && scannerX <= particleEnd) color = r.RED;
+function overlapCheck(particle1X, particle1End, particle2X, particle2End) {
+    const atParticle1 = scannerX + scannerWidth >= particle1X && scannerX <= particle1End;
+    const atparticle2 = scannerX + scannerWidth >= particle2X && scannerX <= particle2End;
+
+    if (atParticle1 || atparticle2) return r.Fade(r.RED, 0.7);
     else {
-        color = r.WHITE;
+        return r.WHITE;
 
     }
 }
@@ -59,8 +69,8 @@ function draw() {
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
 
-
-    r.DrawRectangle(particleX, particleY, ParticleWidth, HEIGHT, r.BLUE);
+    r.DrawRectangle(particle2X, particle2Y, Particle2Width, HEIGHT, r.BLUE);
+    r.DrawRectangle(particle1X, particle1Y, Particle1Width, HEIGHT, r.BLUE);
     r.DrawRectangle(scannerX, scannerY, scannerWidth, HEIGHT, color);
 
     r.EndDrawing();
