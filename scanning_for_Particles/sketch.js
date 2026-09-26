@@ -12,17 +12,24 @@ function setup() {
     r.InitWindow(WIDTH, HEIGHT, "scanning for particles");
     r.SetTargetFPS(60);
 }
+
 let scannerX = 0;
 let scannerY = 0;
 const scannerWidth = 20;
 let scannerReached = false;
 
-function update() {
+function scannerPosition() {
     if (scannerX + scannerWidth === WIDTH) {
         scannerReached = true;
     } else if (scannerX === 0) {
         scannerReached = false;
     }
+}
+
+function update() {
+
+    scannerPosition();
+
     if (scannerReached) {
 
         scannerX -= 1;
@@ -30,11 +37,14 @@ function update() {
         scannerX += 1;
     }
 
+
 }
+
 
 function draw() {
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
+
 
     r.DrawRectangle(scannerX, scannerY, scannerWidth, HEIGHT, r.WHITE);
 
