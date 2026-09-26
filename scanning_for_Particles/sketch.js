@@ -20,6 +20,7 @@ let detectorOneColor = r.WHITE;
 const detectorOneEnd = WIDTH / 2;
 let detectorOneReached = false;
 let oneReached = false;
+const detectorOneSpeed = 1;
 
 const detectorTwoStart = WIDTH / 2 + 1;
 let detectorTwoX = detectorTwoStart;
@@ -29,6 +30,7 @@ const detectorTwoEnd = WIDTH;
 let detectorTwoColor = r.WHITE;
 let detectorTwoReached = false;
 let twoReached = false;
+const detectorTwoSpeed = 3;
 
 
 const particle1X = 100;
@@ -67,23 +69,13 @@ function update() {
     detectorOneColor = overlapCheck(particle1X, particle1End, particle2X, particle2End, detectorOneX);
     detectorTwoColor = overlapCheck(particle1X, particle1End, particle2X, particle2End, detectorTwoX);
 
-    if (detectorOneReached) {
+    detectorOneX += move(detectorOneReached, detectorOneSpeed);//
+    detectorTwoX += move(detectorTwoReached, detectorTwoSpeed);
+}
 
-        detectorOneX -= 1;
-
-    } else {
-        detectorOneX += 1;
-    }
-    if (detectorTwoReached) {
-
-        detectorTwoX -= 3;
-
-    } else {
-        detectorTwoX += 3;
-    }
-
-
-
+function move(detectorReached, speed) {
+    if (detectorReached) return speed * -1;
+    return speed;
 }
 
 function overlapCheck(particle1X, particle1End, particle2X, particle2End, detectorX) {
