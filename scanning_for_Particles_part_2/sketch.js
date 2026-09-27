@@ -65,18 +65,10 @@ function update() {
     verticalDetectorY += speed(verticalDetectorReached, verticalDetectorSpeed);
 }
 
-function verticalOverlapCheck(particleAxis, particleEnd, detectorY, detectorRange) {
-    const atParticle = detectorY + detectorRange >= particleAxis && detectorY <= particleEnd;
+function overlapCheck(particleAxis, particleEnd, detectorAxis, detectorRange) {
+    const atParticle = detectorAxis + detectorRange >= particleAxis && detectorAxis <= particleEnd;
 
     if (atParticle) return r.Fade(r.RED, 0.7);
-    return r.WHITE;
-}
-
-function horizontalOverlapCheck(particle1Axis, particle1End, particle2Axis, particle2End, detectorX, detectorRange) {
-    const atParticle1 = detectorX + detectorRange >= particle1Axis && detectorX <= particle1End;
-    const atparticle2 = detectorX + detectorRange >= particle2Axis && detectorX <= particle2End;
-
-    if (atParticle1 || atparticle2) return r.Fade(r.RED, 0.7);
     return r.WHITE;
 }
 
@@ -96,9 +88,9 @@ function draw() {
     const verticalParticleHeight = 10;
     const verticalParticleEnd = verticalParticleY + verticalParticleHeight;
 
-    const detectorOneColor = horizontalOverlapCheck(particle1X, particle1End, particle2X, particle2End, detectorOneX, detectorOneWidth);
-    const detectorTwoColor = horizontalOverlapCheck(particle1X, particle1End, particle2X, particle2End, detectorTwoX, detectorTwoWidth);
-    const verticalDetectorColor = verticalOverlapCheck(verticalParticleY, verticalParticleEnd, verticalDetectorY, verticalDetectorheight);
+    const detectorOneColor = overlapCheck(particle1X, particle1End, detectorOneX, detectorOneWidth);
+    const detectorTwoColor = overlapCheck(particle2X, particle2End, detectorTwoX, detectorTwoWidth);
+    const verticalDetectorColor = overlapCheck(verticalParticleY, verticalParticleEnd, verticalDetectorY, verticalDetectorheight);
 
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
