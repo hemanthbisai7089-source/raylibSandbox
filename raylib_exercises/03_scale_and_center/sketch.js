@@ -3,8 +3,8 @@ const geometry = require("./geometry");
 
 
 function setup() {
-    const windowWidth = 1000;
-    const windowHeight = 1000;
+    const windowWidth = 900;
+    const windowHeight = 900;
 
     r.InitWindow(windowWidth, windowHeight, "Raylib");
     r.SetTargetFPS(60);
@@ -18,12 +18,14 @@ function update() {
 }
 
 function draw() {
-    const x = 200;
+    const x = 300;
     const y = 300;
-    const outerRectanglewidth = 700;
-    const outerRectangleheight = 300;
-    const innerRectangleWidth = 500;
-    const innerRectangleHeight = 200;
+    const outerRectanglewidth = 500;
+    const outerRectangleheight = 400;
+    const WIDTH = 0.8;
+    const HEIGHT = 0.8;
+    const innerRectangleWidth = geometry.innerRectangleDimention(WIDTH, outerRectanglewidth);
+    const innerRectangleHeight = geometry.innerRectangleDimention(HEIGHT, outerRectangleheight);
 
     r.BeginDrawing();
     r.ClearBackground(r.BLUE);
@@ -35,9 +37,8 @@ function draw() {
         geometry.rectangleStarting(y, outerRectangleheight, innerRectangleHeight),
         innerRectangleWidth,
         innerRectangleHeight,
-        r.WHITE,
+        r.RED,
     );
-
     r.EndDrawing();
 }
 

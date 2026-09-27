@@ -1,5 +1,5 @@
 const r = require("raylib");
-const geometry = require("./geometry");
+const geometry = require("./geometrya");
 
 function running() {
     return !r.WindowShouldClose();
