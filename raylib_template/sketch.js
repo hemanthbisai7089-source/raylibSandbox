@@ -1,12 +1,13 @@
 const r = require("raylib");
-const geometry = require("./geometrya");
+const geometry = require("./geometry");
 
-function running() {
-    return !r.WindowShouldClose();
-}
 
 function setup() {
     // prepare the sketch
+}
+
+function running() {
+    return !r.WindowShouldClose();
 }
 
 function update() {
