@@ -65,8 +65,8 @@ function update() {
     verticalDetectorY += speed(verticalDetectorReached, verticalDetectorSpeed);
 }
 
-function overlapCheck(particleAxis, particleEnd, detectorAxis, detectorRange) {
-    const atParticle = detectorAxis + detectorRange >= particleAxis && detectorAxis <= particleEnd;
+function overlapCheck(particleAxis, particleRange, detectorAxis, detectorRange) {
+    const atParticle = detectorAxis + detectorRange >= particleAxis && detectorAxis <= particleRange + particleAxis;
 
     if (atParticle) return r.Fade(r.RED, 0.7);
     return r.WHITE;
@@ -76,30 +76,27 @@ function draw() {
     const particle1X = 100;
     const particle1Y = 0;
     const particle1Width = 50;
-    const particle1End = particle1X + particle1Width;
 
     const particle2X = 200;
     const particle2Y = 0;
     const particle2Width = 5;
-    const particle2End = particle2X + particle2Width;
 
     const verticalParticleX = 0;
     const verticalParticleY = 90;
     const verticalParticleHeight = 10;
-    const verticalParticleEnd = verticalParticleY + verticalParticleHeight;
 
-    const detectorOneColor = overlapCheck(particle1X, particle1End, detectorOneX, detectorOneWidth);
-    const detectorTwoColor = overlapCheck(particle2X, particle2End, detectorTwoX, detectorTwoWidth);
-    const verticalDetectorColor = overlapCheck(verticalParticleY, verticalParticleEnd, verticalDetectorY, verticalDetectorheight);
+    const detectorOneColor = overlapCheck(particle1X, particle1Width, detectorOneX, detectorOneWidth);
+    const detectorTwoColor = overlapCheck(particle2X, particle2Width, detectorTwoX, detectorTwoWidth);
+    const verticalDetectorColor = overlapCheck(verticalParticleY, verticalParticleHeight, verticalDetectorY, verticalDetectorheight);
 
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
 
     r.DrawText("Hemanth", 10, 150, 10, r.GREEN);
+
     r.DrawRectangle(particle2X, particle2Y, particle2Width, HEIGHT, r.BLUE);
     r.DrawRectangle(particle1X, particle1Y, particle1Width, HEIGHT, r.BLUE);
     r.DrawRectangle(verticalParticleX, verticalParticleY, WIDTH, verticalParticleHeight, r.BLUE);
-
 
     r.DrawRectangle(detectorOneX, detectorOneY, detectorOneWidth, HEIGHT, detectorOneColor);
     r.DrawRectangle(detectorTwoX, detectorTwoY, detectorTwoWidth, HEIGHT, detectorTwoColor);
