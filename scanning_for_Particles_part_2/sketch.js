@@ -1,5 +1,6 @@
 const r = require("raylib");
-// const geometry = require("./geometry");
+// const geometry = require("./geometry.js");
+const d1 = require("./d1.js");
 
 
 const WIDTH = 300;
@@ -26,11 +27,11 @@ function speed(detectorReached, speed) {
     return detectorReached ? -speed : speed;
 }
 
-let detectorOneX = 0;
-const detectorOneY = 0;
-let detectorOneVelocity = 1;
-const detectorOneStart = detectorOneX;
-const detectorOneWidth = 20;
+// let d1.X = 0;
+// const d1.Y = 0;
+// let d1.Velocity = 1;
+// const d1.Start = d1.X;
+// const d1.Width = 20;
 
 let detectorTwoX = WIDTH / 2;
 const detectorTwoY = 0;
@@ -49,11 +50,11 @@ const verticalDetectorheight = 20;
 
 
 function update() {
-    const detectorOneRangewidth = WIDTH / 2;
+    const d1.Rangewidth = WIDTH / 2;
     const detectorTwoRangewidth = WIDTH / 2;
     const verticalDetectorRangewidth = HEIGHT;
 
-    detectorOneX += isInBounds(detectorOneX, detectorOneWidth - detectorOneWidth, detectorOneStart, detectorOneRangewidth - detectorOneWidth) ? detectorOneVelocity : -detectorOneVelocity;
+    d1.X += isInBounds(d1.X, d1.Width - d1.Width, d1.Start, d1.Rangewidth - d1.Width) ? d1.Velocity : -d1.Velocity;
     detectorTwoX += isInBounds(detectorTwoX, detectorTwoWidth - detectorTwoWidth, detectorTwoStart, detectorTwoRangewidth - detectorTwoWidth) ? detectorTwoVelocity : -detectorTwoVelocity;
     verticalDetectorY += isInBounds(verticalDetectorY, verticalDetectorheight - verticalDetectorheight, verticalDetectorStart, verticalDetectorRangewidth - verticalDetectorheight) ? verticalDetectorVelocity : -verticalDetectorVelocity;
 }
@@ -83,7 +84,7 @@ function draw() {
     const verticalParticleY = 90;
     const verticalParticleHeight = 10;
 
-    const detectorOneColor = getcolor(isInBounds(particle1X, particle1Width, detectorOneX, detectorOneWidth));
+    const d1.Color = getcolor(isInBounds(particle1X, particle1Width, d1.X, d1.Width));
     const detectorTwoColor = getcolor(isInBounds(particle2X, particle2Width, detectorTwoX, detectorTwoWidth));
     const verticalDetectorColor = getcolor(isInBounds(verticalParticleY, verticalParticleHeight, verticalDetectorY, verticalDetectorheight));
 
@@ -96,7 +97,7 @@ function draw() {
     r.DrawRectangle(particle1X, particle1Y, particle1Width, HEIGHT, r.BLUE);
     r.DrawRectangle(verticalParticleX, verticalParticleY, WIDTH, verticalParticleHeight, r.BLUE);
 
-    r.DrawRectangle(detectorOneX, detectorOneY, detectorOneWidth, HEIGHT, detectorOneColor);
+    r.DrawRectangle(d1.X, d1.Y, d1.Width, HEIGHT, d1.Color);
     r.DrawRectangle(detectorTwoX, detectorTwoY, detectorTwoWidth, HEIGHT, detectorTwoColor);
     r.DrawRectangle(verticalDetectorX, verticalDetectorY, WIDTH, verticalDetectorheight, verticalDetectorColor);
 
