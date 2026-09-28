@@ -53,14 +53,9 @@ function update() {
     const detectorTwoRangewidth = WIDTH / 2;
     const verticalDetectorRangewidth = HEIGHT;
 
-
-    detectorOneVelocity = isInBounds(detectorOneX, detectorOneWidth - detectorOneWidth, detectorOneStart, detectorOneRangewidth - detectorOneWidth) ? detectorOneVelocity : -detectorOneVelocity;
-    detectorTwoVelocity = isInBounds(detectorTwoX, detectorTwoWidth - detectorTwoWidth, detectorTwoStart, detectorTwoRangewidth - detectorTwoWidth) ? detectorTwoVelocity : -detectorTwoVelocity;
-    verticalDetectorVelocity = isInBounds(verticalDetectorY, verticalDetectorheight - verticalDetectorheight, verticalDetectorStart, verticalDetectorRangewidth - verticalDetectorheight) ? verticalDetectorVelocity : -verticalDetectorVelocity;
-
-    detectorOneX += detectorOneVelocity;
-    detectorTwoX += detectorTwoVelocity;
-    verticalDetectorY += verticalDetectorVelocity;
+    detectorOneX += isInBounds(detectorOneX, detectorOneWidth - detectorOneWidth, detectorOneStart, detectorOneRangewidth - detectorOneWidth) ? detectorOneVelocity : -detectorOneVelocity;
+    detectorTwoX += isInBounds(detectorTwoX, detectorTwoWidth - detectorTwoWidth, detectorTwoStart, detectorTwoRangewidth - detectorTwoWidth) ? detectorTwoVelocity : -detectorTwoVelocity;
+    verticalDetectorY += isInBounds(verticalDetectorY, verticalDetectorheight - verticalDetectorheight, verticalDetectorStart, verticalDetectorRangewidth - verticalDetectorheight) ? verticalDetectorVelocity : -verticalDetectorVelocity;
 }
 
 function isInBounds(start1, width1, start2, width2) {
