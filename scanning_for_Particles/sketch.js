@@ -1,101 +1,87 @@
 const r = require("raylib");
 //const geometry = require("./geometrya");
 
-function running() {
-    return !r.WindowShouldClose();
-}
 
 const WIDTH = 300;
 const HEIGHT = 200;
+const FPS = 60;
 
 function setup() {
+    r.SetTraceLogLevel(r.LOG_NONE);
     r.InitWindow(WIDTH, HEIGHT, "scanning for particles");
-    r.SetTargetFPS(60);
+    r.SetTargetFPS(FPS);
 }
-const detectorOneStart = 0;
-let detectorOneX = detectorOneStart;
-let detectorOneY = 0;
-const detectorOneWidth = 20;
-let detectorOneColor = r.WHITE;
-const detectorOneEnd = WIDTH / 2;
-let detectorOneReached = false;
-let oneReached = false;
-const detectorOneSpeed = 1;
-
-const detectorTwoStart = WIDTH / 2 + 1;
-let detectorTwoX = detectorTwoStart;
-let detectorTwoY = 0;
-const detectorTwoWidth = 20;
-const detectorTwoEnd = WIDTH;
-let detectorTwoColor = r.WHITE;
-let detectorTwoReached = false;
-let twoReached = false;
-const detectorTwoSpeed = 3;
-
-
-const particle1X = 100;
-const particle1Y = 0;
-const Particle1Width = 50;
-const particle1End = particle1X + Particle1Width;
-const particle2X = 200;
-const particle2Y = 0;
-const Particle2Width = 5;
-const particle2End = particle2X + Particle2Width;
-
-function scannerPosition(detectorX, detectorWidth, detectorEnd, detectorNumber) {
-    if (detectorNumber === 1) {
-        if (detectorX + detectorWidth >= detectorEnd) {
-            oneReached = true;
-        } else if (detectorX <= 0) {
-            oneReached = false;
-
-        } return oneReached;
-    }
-    if (detectorNumber === 2) {
-        if (detectorX + detectorWidth >= detectorEnd) {
-            twoReached = true;
-        } else if (detectorX <= detectorTwoStart) {
-            twoReached = false;
-
-        } return twoReached;
-    }
+function running() {
+    return !r.WindowShouldClose();
 }
+function detectorPosition(axis, range, detectorStart, detectorEnd, previousState) {
+    if (axis + range >= detectorEnd) {
+        return true;
+    } if (axis <= detectorStart) {
+        return false;
+    } return previousState;
 
-function update() {
-
-    detectorOneReached = scannerPosition(detectorOneX, detectorOneWidth, detectorOneEnd, 1);
-    detectorTwoReached = scannerPosition(detectorTwoX, detectorTwoWidth, detectorTwoEnd, 2);
-
-    detectorOneColor = overlapCheck(particle1X, particle1End, particle2X, particle2End, detectorOneX);
-    detectorTwoColor = overlapCheck(particle1X, particle1End, particle2X, particle2End, detectorTwoX);
-
-    detectorOneX += move(detectorOneReached, detectorOneSpeed);//
-    detectorTwoX += move(detectorTwoReached, detectorTwoSpeed);
 }
-
-function move(detectorReached, speed) {
+function speed(detectorReached, speed) {
     if (detectorReached) return speed * -1;
     return speed;
 }
 
-function overlapCheck(particle1X, particle1End, particle2X, particle2End, detectorX) {
-    const atParticle1 = detectorX + detectorOneWidth >= particle1X && detectorX <= particle1End;
-    const atparticle2 = detectorX + detectorOneWidth >= particle2X && detectorX <= particle2End;
+let detectorOneX = 0;
+let detectorTwoX = WIDTH / 2 + 1;
 
-    if (atParticle1 || atparticle2) return r.Fade(r.RED, 0.7);
-    else {
-        return r.WHITE;
 
-    }
+let detectorOneY = 0;
+let detectorTwoY = 0;
+
+let detectorOneReached = false;
+let detectorTwoReached = false;
+
+const detectorOneStart = detectorOneX;
+const detectorTwoStart = detectorTwoX;
+
+const detectorOneWidth = 20;
+const detectorTwoWidth = 20;
+
+function update() {
+    const detectorOneEnd = WIDTH / 2;
+    const detectorTwoEnd = WIDTH;
+
+    const detectorOneSpeed = 1;
+    const detectorTwoSpeed = 3;
+
+    detectorOneReached = detectorPosition(detectorOneX, detectorOneWidth, detectorOneStart, detectorOneEnd, detectorOneReached);
+    detectorTwoReached = detectorPosition(detectorTwoX, detectorTwoWidth, detectorTwoStart, detectorTwoEnd, detectorTwoReached);
+
+    detectorOneX += speed(detectorOneReached, detectorOneSpeed);
+    detectorTwoX += speed(detectorTwoReached, detectorTwoSpeed);
 }
 
+
+function overlapCheck(particleAxis, particleRange, detectorAxis, detectorRange) {
+    const atParticle = detectorAxis + detectorRange >= particleAxis && detectorAxis <= particleRange + particleAxis;
+
+    if (atParticle) return r.Fade(r.RED, 0.7);
+    return r.WHITE;
+}
 function draw() {
+    const particle1X = 100;
+    const particle1Y = 0;
+    const particle1Width = 50;
+
+    const particle2X = 200;
+    const particle2Y = 0;
+    const particle2Width = 5;
+
+    const detectorOneColor = overlapCheck(particle1X, particle1Width, detectorOneX, detectorOneWidth);
+    const detectorTwoColor = overlapCheck(particle2X, particle2Width, detectorTwoX, detectorTwoWidth);
 
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
 
-    r.DrawRectangle(particle2X, particle2Y, Particle2Width, HEIGHT, r.BLUE);
-    r.DrawRectangle(particle1X, particle1Y, Particle1Width, HEIGHT, r.BLUE);
+    r.DrawRectangle(particle2X, particle2Y, particle2Width, HEIGHT, r.BLUE);
+    r.DrawRectangle(particle1X, particle1Y, particle1Width, HEIGHT, r.BLUE);
+
     r.DrawRectangle(detectorOneX, detectorOneY, detectorOneWidth, HEIGHT, detectorOneColor);
     r.DrawRectangle(detectorTwoX, detectorTwoY, detectorTwoWidth, HEIGHT, detectorTwoColor);
 
