@@ -27,42 +27,43 @@ function speed(detectorReached, speed) {
 }
 
 let detectorOneX = 0;
-let detectorTwoX = WIDTH / 2 + 1;
-const verticalDetectorX = 0;
-
 const detectorOneY = 0;
-const detectorTwoY = 0;
-let verticalDetectorY = 0;
-
-// let detectorOneReached = false;
 let detectorOneVelocity = 1;
-let detectorTwoVelocity = 1.5;
-let verticalDetectorVelocity = 1;
-
 const detectorOneStart = detectorOneX;
-const detectorTwoStart = detectorTwoX;
-const verticalDetectorStart = verticalDetectorY;
-
 const detectorOneWidth = 20;
+
+let detectorTwoX = WIDTH / 2;
+const detectorTwoY = 0;
+let detectorTwoVelocity = 1.5;
+const detectorTwoStart = detectorTwoX;
 const detectorTwoWidth = 20;
+
+const verticalDetectorX = 0;
+let verticalDetectorY = 0;
+let verticalDetectorVelocity = 1;
+const verticalDetectorStart = verticalDetectorY;
 const verticalDetectorheight = 20;
 
+
+
+
+
 function update() {
-    const detectorOneEnd = WIDTH / 2;
-    const detectorTwoEnd = WIDTH / 2;
-    const verticalDetectorEnd = HEIGHT;
+    const detectorOneRangewidth = WIDTH / 2;
+    const detectorTwoRangewidth = WIDTH / 2;
+    const verticalDetectorRangewidth = HEIGHT;
 
 
-    detectorOneVelocity = overlapCheck(detectorOneX, detectorOneWidth - detectorOneWidth, detectorOneStart, detectorOneEnd - detectorOneWidth) ? detectorOneVelocity : -detectorOneVelocity;
-    detectorTwoVelocity = overlapCheck(detectorTwoX, detectorTwoWidth - detectorTwoWidth, detectorTwoStart, detectorTwoEnd - detectorTwoWidth) ? detectorTwoVelocity : -detectorTwoVelocity;
-    verticalDetectorVelocity = overlapCheck(verticalDetectorY, verticalDetectorheight - verticalDetectorheight, verticalDetectorStart, verticalDetectorEnd - verticalDetectorheight) ? verticalDetectorVelocity : -verticalDetectorVelocity;
+    detectorOneVelocity = isInBounds(detectorOneX, detectorOneWidth - detectorOneWidth, detectorOneStart, detectorOneRangewidth - detectorOneWidth) ? detectorOneVelocity : -detectorOneVelocity;
+    detectorTwoVelocity = isInBounds(detectorTwoX, detectorTwoWidth - detectorTwoWidth, detectorTwoStart, detectorTwoRangewidth - detectorTwoWidth) ? detectorTwoVelocity : -detectorTwoVelocity;
+    verticalDetectorVelocity = isInBounds(verticalDetectorY, verticalDetectorheight - verticalDetectorheight, verticalDetectorStart, verticalDetectorRangewidth - verticalDetectorheight) ? verticalDetectorVelocity : -verticalDetectorVelocity;
 
     detectorOneX += detectorOneVelocity;
     detectorTwoX += detectorTwoVelocity;
     verticalDetectorY += verticalDetectorVelocity;
 }
 
-function overlapCheck(start1, width1, start2, width2) {
+function isInBounds(start1, width1, start2, width2) {
     const end1 = start1 + width1;
     const end2 = start2 + width2;
 
@@ -87,9 +88,9 @@ function draw() {
     const verticalParticleY = 90;
     const verticalParticleHeight = 10;
 
-    const detectorOneColor = getcolor(overlapCheck(particle1X, particle1Width, detectorOneX, detectorOneWidth));
-    const detectorTwoColor = getcolor(overlapCheck(particle2X, particle2Width, detectorTwoX, detectorTwoWidth));
-    const verticalDetectorColor = getcolor(overlapCheck(verticalParticleY, verticalParticleHeight, verticalDetectorY, verticalDetectorheight));
+    const detectorOneColor = getcolor(isInBounds(particle1X, particle1Width, detectorOneX, detectorOneWidth));
+    const detectorTwoColor = getcolor(isInBounds(particle2X, particle2Width, detectorTwoX, detectorTwoWidth));
+    const verticalDetectorColor = getcolor(isInBounds(verticalParticleY, verticalParticleHeight, verticalDetectorY, verticalDetectorheight));
 
     r.BeginDrawing();
     r.ClearBackground(r.BLACK);
