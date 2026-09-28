@@ -1,6 +1,6 @@
-let x = 0;
+const x = 0;
 const y = 0;
-let velocity = 1;
+const velocity = 1;
 const start = x;
 const width = 20;
 

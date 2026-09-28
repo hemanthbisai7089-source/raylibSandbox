@@ -1,16 +1,21 @@
-const sketch = require("./sketch");
+const sketch = require("./sketch.js");
 
 function loop() {
-    while (sketch.running()) {
-        sketch.update();
-        sketch.draw();
-    }
+  while (sketch.running()) {
+    sketch.update();
+    sketch.draw();
+  }
 }
 
 function main() {
-    sketch.setup();
-    loop();
-    sketch.teardown();
+  const WIDTH = 700;
+  const HEIGHT = 400;
+  const FPS = 60;
+  const TITLE = "scanning for particles";
+
+  sketch.setup(WIDTH, HEIGHT, FPS, TITLE);
+  loop();
+  sketch.teardown();
 }
 
 main();
