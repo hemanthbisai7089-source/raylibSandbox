@@ -4,11 +4,18 @@ const d1 = require("./d1.js");
 const d2 = require("./d2.js");
 const vd = require("./vd.js");
 
-function setup(width, height, fps, title) {
+const WIDTH = 700;
+const HEIGHT = 400;
+const FPS = 60;
+const TITLE = "scanning for particles";
+
+function setup() {
   r.SetTraceLogLevel(r.LOG_NONE);
-  r.InitWindow(width, height, title);
-  r.SetTargetFPS(fps);
+  r.InitWindow(WIDTH, HEIGHT, TITLE);
+  r.SetTargetFPS(FPS);
 }
+
+let detectorTwoX = WIDTH / 2;
 
 function running() {
   return !r.WindowShouldClose();
@@ -28,7 +35,7 @@ function update() {
     ? d1.velocity
     : -d1.velocity;
   d2.velocity = isInBounds(
-    d2.x,
+    detectorTwoX,
     d2.width - d2.width,
     d2.start,
     detectorTwoRange - d2.width,
@@ -45,7 +52,7 @@ function update() {
     : -vd.velocity;
 
   d1.x += d1.velocity;
-  d2.x += d2.velocity;
+  detectorTwoX += d2.velocity;
   vd.y += vd.velocity;
 }
 
@@ -70,15 +77,15 @@ function draw() {
 
   const verticalParticleX = 0;
   const verticalParticleY = 90;
-  const verticalParticleHeight = 60;
+  const verticalParticleHeight = 50;
 
   const detectorOneColor = getcolor(
     isInBounds(particle1X, particle1Width, d1.x, d1.width) ||
       isInBounds(particle2X, particle2Width, d1.x, d1.width),
   );
   const detectorTwoColor = getcolor(
-    isInBounds(particle2X, particle2Width, d2.x, d2.width) ||
-      isInBounds(particle1X, particle1Width, d2.x, d2.width),
+    isInBounds(particle2X, particle2Width, detectorTwoX, d2.width) ||
+      isInBounds(particle1X, particle1Width, detectorTwoX, d2.width),
   );
   const verticalDetectorColor = getcolor(
     isInBounds(verticalParticleY, verticalParticleHeight, vd.y, vd.height),
@@ -112,7 +119,13 @@ function draw() {
   );
 
   r.DrawRectangle(d1.x, d1.y, d1.width, r.GetScreenHeight(), detectorOneColor);
-  r.DrawRectangle(d2.x, d2.y, d2.width, r.GetScreenHeight(), detectorTwoColor);
+  r.DrawRectangle(
+    detectorTwoX,
+    d2.y,
+    d2.width,
+    r.GetScreenHeight(),
+    detectorTwoColor,
+  );
   r.DrawRectangle(
     vd.x,
     vd.y,

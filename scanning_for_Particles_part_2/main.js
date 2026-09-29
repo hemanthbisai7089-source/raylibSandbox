@@ -8,12 +8,7 @@ function loop() {
 }
 
 function main() {
-  const WIDTH = 700;
-  const HEIGHT = 400;
-  const FPS = 60;
-  const TITLE = "scanning for particles";
-
-  sketch.setup(WIDTH, HEIGHT, FPS, TITLE);
+  sketch.setup();
   loop();
   sketch.teardown();
 }
